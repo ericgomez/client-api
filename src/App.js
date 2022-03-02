@@ -11,10 +11,10 @@ function App () {
   return (
     <>
       <Header />
-      <div class='grid container content-principal'>
+      <div className='grid container content-principal'>
         <Navigation />
 
-        <main class='box-content col-9'>
+        <main className='box-content col-9'>
           <Routes>
             <Route path='/' element={<Customers />} />
             <Route path='/products' element={<Products />} />
