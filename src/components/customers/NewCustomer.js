@@ -15,6 +15,16 @@ export const NewCustomer = () => {
     })
   }
 
+  const validateCustomer = () => {
+    const { name, lastName, email, phone } = customer
+
+    if (name === '' || lastName === '' || email === '' || phone === '') {
+      return true
+    } else {
+      return false
+    }
+  }
+
   return (
     <>
       <h2>New Customer</h2>
@@ -72,7 +82,12 @@ export const NewCustomer = () => {
         </div>
 
         <div className='send'>
-          <input type='submit' className='btn btn-blue' value='Add Customer' />
+          <input
+            type='submit'
+            className='btn btn-blue'
+            value='Add Customer'
+            disabled={validateCustomer()}
+          />
         </div>
       </form>
     </>
