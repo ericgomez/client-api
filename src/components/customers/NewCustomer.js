@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import instanceAxios from './../../config/axios'
+
 export const NewCustomer = () => {
   const [customer, setCustomer] = useState({
     name: '',
@@ -25,10 +27,24 @@ export const NewCustomer = () => {
     }
   }
 
+  const handleSubmit = e => {
+    e.preventDefault()
+
+    // send data to API
+    instanceAxios
+      .post('/customers', customer)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        console.log('Error ss: ', error)
+      })
+  }
+
   return (
     <>
       <h2>New Customer</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <legend>Fill in all the fields</legend>
 
         <div className='campo'>
@@ -74,7 +90,7 @@ export const NewCustomer = () => {
         <div className='campo'>
           <label>Phone:</label>
           <input
-            type='email'
+            type='tel'
             placeholder='Phone Customer'
             name='phone'
             onChange={handleInput}
