@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import instanceAxios from './../../config/axios'
 
 export const NewCustomer = () => {
+  const navigate = useNavigate()
   const [customer, setCustomer] = useState({
     name: '',
     lastName: '',
@@ -34,10 +37,17 @@ export const NewCustomer = () => {
     instanceAxios
       .post('/customers', customer)
       .then(response => {
-        console.log(response)
+        Swal.fire('Customer created!', response, 'success')
+
+        // navigate to customers
+        navigate('/', { replace: true })
       })
       .catch(error => {
-        console.log('Error ss: ', error)
+        Swal.fire(
+          'Customer no created ',
+          'The Customer is already registered ',
+          'error'
+        )
       })
   }
 
