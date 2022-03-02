@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { Customer } from './Customer'
@@ -19,6 +20,12 @@ export const Customers = () => {
   return (
     <>
       <h1>Customers</h1>
+
+      <Link to='/customers/new' className='btn btn-green nvo-customer'>
+        <i className='fas fa-plus-circle'></i>
+        New Customer
+      </Link>
+
       <ul className='list-customers'>
         {customers.map(customer => (
           <Customer key={customer._id} customer={customer} />
