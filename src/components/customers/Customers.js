@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
+
 import instanceAxios from './../../config/axios'
+import { Customer } from './Customer'
 
 export const Customers = () => {
   const [customers, setCustomers] = useState([])
@@ -18,9 +20,9 @@ export const Customers = () => {
     <>
       <h1>Customers</h1>
       <ul className='list-customers'>
-        {customers.map(customer => {
-          console.log(customer)
-        })}
+        {customers.map(customer => (
+          <Customer key={customer._id} customer={customer} />
+        ))}
       </ul>
     </>
   )
