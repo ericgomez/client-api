@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
@@ -15,6 +15,18 @@ export const EditCustomer = props => {
     email: '',
     phone: ''
   })
+
+  const getDataAPI = async () => {
+    const response = await instanceAxios.get(`/customers/${id}`)
+
+    setCustomer(response.data)
+  }
+
+  // get data from API
+  useEffect(() => {
+    getDataAPI()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const handleInput = e => {
     setCustomer({
@@ -38,19 +50,15 @@ export const EditCustomer = props => {
 
     // send data to API
     instanceAxios
-      .post('/customers', customer)
+      .put('/customers', customer)
       .then(response => {
-        Swal.fire('Customer created!', response, 'success')
+        Swal.fire('Customer updated!', response, 'success')
 
         // navigate to customers
         navigate('/', { replace: true })
       })
       .catch(error => {
-        Swal.fire(
-          'Customer no created ',
-          'The Customer is already registered ',
-          'error'
-        )
+        Swal.fire('Customer no updated', 'The Customer no updated', 'error')
       })
   }
 
@@ -67,6 +75,7 @@ export const EditCustomer = props => {
             placeholder='Name Customer'
             name='name'
             onChange={handleInput}
+            value={customer.name}
           />
         </div>
 
@@ -77,6 +86,7 @@ export const EditCustomer = props => {
             placeholder='LastName Customer'
             name='lastName'
             onChange={handleInput}
+            value={customer.lastName}
           />
         </div>
 
@@ -87,6 +97,7 @@ export const EditCustomer = props => {
             placeholder='Company Customer'
             name='company'
             onChange={handleInput}
+            value={customer.company}
           />
         </div>
 
@@ -97,6 +108,7 @@ export const EditCustomer = props => {
             placeholder='Email Customer'
             name='email'
             onChange={handleInput}
+            value={customer.email}
           />
         </div>
 
@@ -107,6 +119,7 @@ export const EditCustomer = props => {
             placeholder='Phone Customer'
             name='phone'
             onChange={handleInput}
+            value={customer.phone}
           />
         </div>
 
