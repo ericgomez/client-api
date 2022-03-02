@@ -12,6 +12,7 @@ export const EditCustomer = props => {
   const [customer, setCustomer] = useState({
     name: '',
     lastName: '',
+    company: '',
     email: '',
     phone: ''
   })
@@ -50,7 +51,7 @@ export const EditCustomer = props => {
 
     // send data to API
     instanceAxios
-      .put('/customers', customer)
+      .put(`/customers/${id}`, customer)
       .then(response => {
         Swal.fire('Customer updated!', response, 'success')
 
