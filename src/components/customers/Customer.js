@@ -1,5 +1,7 @@
+import { Link } from 'react-router-dom'
+
 export const Customer = ({ customer }) => {
-  const { id, name, lastName, email, company, phone } = customer
+  const { _id, name, lastName, email, company, phone } = customer
 
   return (
     <li className='customer'>
@@ -12,10 +14,10 @@ export const Customer = ({ customer }) => {
         <p>Tel: {phone}</p>
       </div>
       <div className='actions'>
-        <a href='#' className='btn btn-blue'>
+        <Link to={`/customers/edit/${_id}`} className='btn btn-blue'>
           <i className='fas fa-pen-alt'></i>
           Edit Customer
-        </a>
+        </Link>
         <button type='button' className='btn btn-red btn-delete'>
           <i className='fas fa-times'></i>
           Delete Customer
