@@ -14,7 +14,7 @@ export const Products = () => {
 
   useEffect(() => {
     getProductsAPI()
-  }, [])
+  }, [products])
 
   return (
     <>
