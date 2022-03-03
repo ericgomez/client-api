@@ -3,10 +3,10 @@ import Swal from 'sweetalert2'
 
 import instanceAxios from './../../config/axios'
 
-export const Customer = ({ customer }) => {
+export const Customer = ({ customer, handleRemoveCustomer }) => {
   const { _id, name, lastName, email, company, phone } = customer
 
-  const handleDeleted = async id => {
+  const handleDeleted = async idCustomer => {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -17,8 +17,10 @@ export const Customer = ({ customer }) => {
       confirmButtonText: 'Yes, delete it!'
     }).then(result => {
       if (result.isConfirmed) {
-        instanceAxios.delete(`/customers/${id}`).then(response => {
+        instanceAxios.delete(`/customers/${idCustomer}`).then(response => {
           Swal.fire('Deleted!', response.data.message, 'success')
+          // delete customer from state
+          handleRemoveCustomer(idCustomer)
         })
       }
     })

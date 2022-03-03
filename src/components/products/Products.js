@@ -1,20 +1,30 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Link } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { Product } from './../../components/products/Product'
+import { Spinner } from './../../components/layout/Spinner'
 
 export const Products = () => {
   const [products, setProducts] = useState([])
-
-  const getProductsAPI = async () => {
-    const response = await instanceAxios.get('/products')
-    setProducts(response.data)
-  }
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    const getProductsAPI = async () => {
+      const response = await instanceAxios.get('/products')
+      setProducts(response.data)
+      setLoading(false)
+    }
+
     getProductsAPI()
-  }, [products])
+  }, [])
+
+  const handleRemoveProduct = id => {
+    setProducts(products.filter(product => product._id !== id))
+  }
+
+  // Spinner while loading
+  if (loading) return <Spinner />
 
   return (
     <>
@@ -27,7 +37,11 @@ export const Products = () => {
 
       <ul className='list-products'>
         {products.map(product => (
-          <Product key={product._id} product={product} />
+          <Product
+            key={product._id}
+            product={product}
+            handleRemoveProduct={handleRemoveProduct}
+          />
         ))}
       </ul>
     </>

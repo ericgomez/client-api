@@ -7,15 +7,18 @@ import { Customer } from './Customer'
 export const Customers = () => {
   const [customers, setCustomers] = useState([])
 
-  const getDataAPI = async () => {
-    const response = await instanceAxios.get('/customers')
-
-    setCustomers(response.data)
-  }
-
   useEffect(() => {
+    const getDataAPI = async () => {
+      const response = await instanceAxios.get('/customers')
+
+      setCustomers(response.data)
+    }
     getDataAPI()
-  }, [customers])
+  }, [])
+
+  const handleRemoveCustomer = id => {
+    setCustomers(customers.filter(customer => customer._id !== id))
+  }
 
   return (
     <>
@@ -28,7 +31,11 @@ export const Customers = () => {
 
       <ul className='list-customers'>
         {customers.map(customer => (
-          <Customer key={customer._id} customer={customer} />
+          <Customer
+            key={customer._id}
+            customer={customer}
+            handleRemoveCustomer={handleRemoveCustomer}
+          />
         ))}
       </ul>
     </>
