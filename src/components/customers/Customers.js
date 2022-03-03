@@ -15,7 +15,7 @@ export const Customers = () => {
 
   useEffect(() => {
     getDataAPI()
-  }, [])
+  }, [customers])
 
   return (
     <>
