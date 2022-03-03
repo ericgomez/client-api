@@ -3,9 +3,24 @@ import { useState } from 'react'
 export const NewProduct = () => {
   const [product, setProduct] = useState({
     name: '',
-    price: '',
-    image: ''
+    price: ''
   })
+
+  // useState of file image
+  const [image, setImage] = useState('')
+
+  // Method to handle the input of the form
+
+  const handleInput = e => {
+    setProduct({
+      ...product,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleImage = e => {
+    setImage(e.target.files[0])
+  }
 
   return (
     <>
@@ -16,7 +31,12 @@ export const NewProduct = () => {
 
         <div className='campo'>
           <label>Name:</label>
-          <input type='text' placeholder='Product Name' name='name' />
+          <input
+            type='text'
+            placeholder='Product Name'
+            name='name'
+            onChange={handleInput}
+          />
         </div>
 
         <div className='campo'>
@@ -27,12 +47,13 @@ export const NewProduct = () => {
             min='0.00'
             step='0.01'
             placeholder='Price'
+            onChange={handleInput}
           />
         </div>
 
         <div className='campo'>
           <label>Image:</label>
-          <input type='file' name='image' />
+          <input type='file' name='image' onChange={handleImage} />
         </div>
 
         <div className='send'>
