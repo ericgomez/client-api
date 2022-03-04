@@ -40,22 +40,23 @@ export const EditProduct = () => {
   const handleSubmit = async e => {
     e.preventDefault()
 
+    const formData = new FormData()
+    formData.append('name', product.name)
+    formData.append('price', product.price)
+    formData.append('image', product.image)
+
     try {
-      const res = await instanceAxios.post('/products', product, {
+      const res = await instanceAxios.put(`/products/${id}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       })
 
       if (res.status !== 201) {
-        Swal.fire(
-          'Product no created ',
-          'The Product is already registered ',
-          'error'
-        )
+        Swal.fire('Product no updated ', 'The Product no updated ', 'error')
       }
 
-      Swal.fire('Good job!', 'Your product has been created!', 'success')
+      Swal.fire('Good job!', 'Your product has been updated!', 'success')
 
       // navigate to customers
       navigate('/products', { replace: true })
