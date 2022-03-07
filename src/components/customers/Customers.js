@@ -22,7 +22,7 @@ export const Customers = () => {
 
   return (
     <>
-      <h1>Customers</h1>
+      <h2>Customers</h2>
 
       <Link to='/customers/new' className='btn btn-green nvo-customer'>
         <i className='fas fa-plus-circle'></i>
