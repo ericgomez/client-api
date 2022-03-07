@@ -11,6 +11,7 @@ import { NewProduct } from './components/products/NewProduct'
 import { EditProduct } from './components/products/EditProduct'
 import { Orders } from './components/orders/Orders'
 import { NewOrder } from './components/orders/NewOrder'
+import { Login } from './components/auth/Login'
 
 function App () {
   return (
@@ -29,6 +30,8 @@ function App () {
             <Route path='/products/edit/:id' element={<EditProduct />} />
             <Route path='/orders' element={<Orders />} />
             <Route path='/orders/new/:id' element={<NewOrder />} />
+
+            <Route path='/login' element={<Login />} />
           </Routes>
         </main>
       </div>
