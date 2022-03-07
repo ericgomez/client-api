@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import instanceAxios from './../../config/axios'
@@ -7,6 +7,7 @@ import { FormSearchProduct } from './FormSearchProduct'
 import { FormQuantityProduct } from './FormQuantityProduct'
 
 export const NewOrder = () => {
+  const navigate = useNavigate()
   /* The useParams hook returns an object of key/value pairs of the dynamic params from the 
       current URL that were matched by the <Route path>.*/
   const { id } = useParams()
@@ -92,6 +93,31 @@ export const NewOrder = () => {
     setProducts(newProducts)
   }
 
+  const handleMakeOrder = async e => {
+    e.preventDefault()
+
+    const order = {
+      customer: customer._id,
+      order: products,
+      total
+    }
+
+    const response = await instanceAxios.post(`/orders`, order)
+
+    if (response.status === 201) {
+      Swal.fire(
+        'Order created',
+        'You can check the order in the list of orders',
+        'success'
+      )
+    } else {
+      Swal.fire('Order not created', 'The order is already registered', 'error')
+    }
+
+    // navigate to orders
+    navigate('/orders', { replace: true })
+  }
+
   return (
     <>
       <h2>New Order</h2>
@@ -129,7 +155,7 @@ export const NewOrder = () => {
       </div>
 
       {total > 0 && (
-        <form>
+        <form onSubmit={handleMakeOrder}>
           <input
             type='submit'
             className='btn btn-green btn-block'
