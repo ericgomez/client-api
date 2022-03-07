@@ -66,7 +66,7 @@ export const NewOrder = () => {
 
       <ul className='resume'>
         {products.map((product, index) => (
-          <FormQuantityProduct key={index} products={products} />
+          <FormQuantityProduct key={product._id} product={product} />
         ))}
       </ul>
 
