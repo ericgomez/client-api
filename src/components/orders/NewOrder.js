@@ -84,6 +84,14 @@ export const NewOrder = () => {
     setTotal(total)
   }
 
+  const deleteProductOrder = id => {
+    const allProducts = [...products]
+
+    const newProducts = allProducts.filter(product => product._id !== id)
+
+    setProducts(newProducts)
+  }
+
   return (
     <>
       <h2>New Order</h2>
@@ -108,6 +116,7 @@ export const NewOrder = () => {
             product={product}
             decreaseProduct={decreaseProduct}
             increaseProduct={increaseProduct}
+            deleteProductOrder={deleteProductOrder}
             index={index}
           />
         ))}

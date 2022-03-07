@@ -2,9 +2,10 @@ export const FormQuantityProduct = ({
   product,
   decreaseProduct,
   increaseProduct,
+  deleteProductOrder,
   index
 }) => {
-  const { name, price, quantity } = product
+  const { _id, name, price, quantity } = product
 
   return (
     <li>
@@ -23,7 +24,11 @@ export const FormQuantityProduct = ({
 
           <i className='fas fa-plus' onClick={() => increaseProduct(index)}></i>
         </div>
-        <button type='button' className='btn btn-red'>
+        <button
+          type='button'
+          className='btn btn-red'
+          onClick={() => deleteProductOrder(_id)}
+        >
           <i className='fas fa-minus-circle'></i>
           Delete Product
         </button>
