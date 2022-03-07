@@ -1,7 +1,38 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+
+import instanceAxios from './../../config/axios'
+
 export const Login = () => {
+  const navigate = useNavigate()
+  const [credentials, setCredentials] = useState({
+    email: '',
+    password: ''
+  })
+
   const handleChange = e => {
     const { name, value } = e.target
-    // setUser({ ...user, [name]: value })
+
+    setCredentials({ ...credentials, [name]: value })
+  }
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    try {
+      const response = await instanceAxios.post('/auth/login', credentials)
+
+      // save token in local storage
+      localStorage.setItem('token', response.data.token)
+
+      Swal.fire('Login successful', 'Welcome', 'success')
+
+      // navigate to customers
+      navigate('/', { replace: true })
+    } catch (error) {
+      Swal.fire('Error', 'The credentials are incorrect', 'error')
+    }
   }
 
   return (
@@ -9,7 +40,7 @@ export const Login = () => {
       <h2>Login</h2>
 
       <div className='container-form'>
-        <form>
+        <form onSubmit={handleSubmit}>
           <div className='campo'>
             <label htmlFor='email'>Email</label>
             <input
