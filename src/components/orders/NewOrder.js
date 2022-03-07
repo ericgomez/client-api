@@ -48,25 +48,25 @@ export const NewOrder = () => {
   }
 
   const decreaseProduct = index => {
-    const newProducts = [...products]
-    const product = newProducts[index]
+    const allProducts = [...products]
+    const product = allProducts[index]
 
     product.quantity = product.quantity - 1
 
     if (product.quantity === 0) {
-      newProducts.splice(index, 1)
+      allProducts.splice(index, 1)
     }
 
-    setProducts(newProducts)
+    setProducts(allProducts)
   }
 
   const increaseProduct = index => {
-    const newProducts = [...products]
-    const product = newProducts[index]
+    const allProducts = [...products]
+    const product = allProducts[index]
 
     product.quantity = product.quantity + 1
 
-    setProducts(newProducts)
+    setProducts(allProducts)
   }
 
   return (
