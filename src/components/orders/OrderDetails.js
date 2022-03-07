@@ -1,31 +1,26 @@
-export const OrderDetails = () => {
+export const OrderDetails = ({ order }) => {
+  const { customer, total } = order
   return (
     <li className='order'>
       <div className='info-order'>
-        <p className='id'>ID: 0192019201291201</p>
-        <p className='name'>Client: Eric Gomez</p>
+        <p className='id'>ID: {customer._id}</p>
+        <p className='name'>
+          Client: {customer.name} {customer.lastName}
+        </p>
 
         <div className='articles-order'>
           <p className='products'>Articles order: </p>
           <ul>
-            <li>
-              <p>Macbook Pro</p>
-              <p>Precio: $3000</p>
-              <p>Cantidad: 4</p>
-            </li>
-            <li>
-              <p>Macbook Pro</p>
-              <p>Precio: $3000</p>
-              <p>Cantidad: 4</p>
-            </li>
-            <li>
-              <p>Macbook Pro</p>
-              <p>Precio: $3000</p>
-              <p>Cantidad: 4</p>
-            </li>
+            {order.order.map(article => (
+              <li key={article.product._id}>
+                <p>{article.product.name}</p>
+                <p>Price: ${article.product.price}</p>
+                <p>Quantity: {article.quantity}</p>
+              </li>
+            ))}
           </ul>
         </div>
-        <p className='total'>Total: $3,500 </p>
+        <p className='total'>Total: ${total} </p>
       </div>
       <div className='actions'>
         <button type='button' className='btn btn-red btn-delete'>
