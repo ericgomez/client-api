@@ -1,4 +1,9 @@
-export const FormQuantityProduct = ({ product }) => {
+export const FormQuantityProduct = ({
+  product,
+  decreaseProduct,
+  increaseProduct,
+  index
+}) => {
   const { name, price, quantity } = product
 
   return (
@@ -9,11 +14,14 @@ export const FormQuantityProduct = ({ product }) => {
       </div>
       <div className='actions'>
         <div className='container-quantity'>
-          <i className='fas fa-minus'></i>
+          <i
+            className='fas fa-minus'
+            onClick={() => decreaseProduct(index)}
+          ></i>
 
           <p>{quantity}</p>
 
-          <i className='fas fa-plus'></i>
+          <i className='fas fa-plus' onClick={() => increaseProduct(index)}></i>
         </div>
         <button type='button' className='btn btn-red'>
           <i className='fas fa-minus-circle'></i>

@@ -47,6 +47,28 @@ export const NewOrder = () => {
     setSearch(e.target.value)
   }
 
+  const decreaseProduct = index => {
+    const newProducts = [...products]
+    const product = newProducts[index]
+
+    product.quantity = product.quantity - 1
+
+    if (product.quantity === 0) {
+      newProducts.splice(index, 1)
+    }
+
+    setProducts(newProducts)
+  }
+
+  const increaseProduct = index => {
+    const newProducts = [...products]
+    const product = newProducts[index]
+
+    product.quantity = product.quantity + 1
+
+    setProducts(newProducts)
+  }
+
   return (
     <>
       <h2>New Order</h2>
@@ -66,7 +88,13 @@ export const NewOrder = () => {
 
       <ul className='resume'>
         {products.map((product, index) => (
-          <FormQuantityProduct key={product._id} product={product} />
+          <FormQuantityProduct
+            key={product._id}
+            product={product}
+            decreaseProduct={decreaseProduct}
+            increaseProduct={increaseProduct}
+            index={index}
+          />
         ))}
       </ul>
 
