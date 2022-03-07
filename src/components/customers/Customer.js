@@ -41,6 +41,11 @@ export const Customer = ({ customer, handleRemoveCustomer }) => {
           <i className='fas fa-pen-alt'></i>
           Edit Customer
         </Link>
+
+        <Link to={`/orders/new/${_id}`} className='btn btn-yellow'>
+          <i className='fas fa-plus'></i>
+          New Order
+        </Link>
         <button
           type='button'
           className='btn btn-red btn-delete'
