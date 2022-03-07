@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import Swal from 'sweetalert2'
 
 import instanceAxios from './../../config/axios'
 import { FormSearchProduct } from './FormSearchProduct'
@@ -9,6 +10,7 @@ export const NewOrder = () => {
       current URL that were matched by the <Route path>.*/
   const { id } = useParams()
   const [customer, setCustomer] = useState({})
+  const [search, setSearch] = useState('')
 
   useEffect(() => {
     const getDataAPI = async () => {
@@ -20,9 +22,24 @@ export const NewOrder = () => {
     getDataAPI()
   }, [id])
 
-  const searchProduct = async product => {}
+  const searchProduct = async e => {
+    e.preventDefault()
 
-  const readDataForm = e => {}
+    const response = await instanceAxios.post(`/products/search/${search}`)
+
+    if (!response.data.length) {
+      Swal.fire('No results found', '', 'error')
+      return
+    }
+
+    console.log(response.data)
+  }
+
+  const readDataForm = e => {
+    e.preventDefault()
+
+    setSearch(e.target.value)
+  }
 
   return (
     <>
