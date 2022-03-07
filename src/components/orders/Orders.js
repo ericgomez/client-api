@@ -16,12 +16,25 @@ export const Orders = () => {
     getOrdersAPI()
   }, [])
 
+  // delete order
+  const deleteOrder = async id => {
+    await instanceAxios.delete(`/orders/${id}`)
+
+    const newOrders = orders.filter(order => order._id !== id)
+
+    setOrders(newOrders)
+  }
+
   return (
     <>
-      <div>Orders</div>
+      <h2>Orders</h2>
       <ul className='list-orders'>
         {orders.map(order => (
-          <OrderDetails key={order._id} order={order} />
+          <OrderDetails
+            key={order._id}
+            order={order}
+            deleteOrder={deleteOrder}
+          />
         ))}
       </ul>
     </>

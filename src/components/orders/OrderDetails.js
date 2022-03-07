@@ -1,5 +1,5 @@
-export const OrderDetails = ({ order }) => {
-  const { customer, total } = order
+export const OrderDetails = ({ order, deleteOrder }) => {
+  const { _id, customer, total } = order
   return (
     <li className='order'>
       <div className='info-order'>
@@ -23,7 +23,11 @@ export const OrderDetails = ({ order }) => {
         <p className='total'>Total: ${total} </p>
       </div>
       <div className='actions'>
-        <button type='button' className='btn btn-red btn-delete'>
+        <button
+          type='button'
+          className='btn btn-red btn-delete'
+          onClick={() => deleteOrder(_id)}
+        >
           <i className='fas fa-times'></i>
           Delete Order
         </button>
