@@ -13,6 +13,7 @@ export const NewOrder = () => {
   const [customer, setCustomer] = useState({})
   const [search, setSearch] = useState('')
   const [products, setProducts] = useState([])
+  const [total, setTotal] = useState(0)
 
   useEffect(() => {
     const getDataAPI = async () => {
@@ -23,6 +24,10 @@ export const NewOrder = () => {
 
     getDataAPI()
   }, [id])
+
+  useEffect(() => {
+    updateTotal()
+  }, [products])
 
   const searchProduct = async e => {
     e.preventDefault()
@@ -69,6 +74,16 @@ export const NewOrder = () => {
     setProducts(allProducts)
   }
 
+  const updateTotal = () => {
+    let total = 0
+
+    products.forEach(product => {
+      total += product.price * product.quantity
+    })
+
+    setTotal(total)
+  }
+
   return (
     <>
       <h2>New Order</h2>
@@ -99,12 +114,20 @@ export const NewOrder = () => {
       </ul>
 
       <div className='campo'>
-        <label>Total:</label>
-        <input type='number' name='price' placeholder='Price' readOnly />
+        <p className='total'>
+          Total to pay <span>{total}</span>
+        </p>
       </div>
-      <div className='send'>
-        <input type='submit' className='btn btn-blue' value='Add Order' />
-      </div>
+
+      {total > 0 && (
+        <form>
+          <input
+            type='submit'
+            className='btn btn-green btn-block'
+            value='Make Order'
+          />
+        </form>
+      )}
     </>
   )
 }
