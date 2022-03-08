@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { Customer } from './Customer'
@@ -9,6 +9,7 @@ import { CRMContext } from './../../context/CRMContext'
 
 export const Customers = () => {
   const [customers, setCustomers] = useState([])
+  const navigate = useNavigate()
 
   // context
   const [auth, setAuth] = useContext(CRMContext)
@@ -16,14 +17,26 @@ export const Customers = () => {
   console.log('auth', auth)
 
   useEffect(() => {
-    const getDataAPI = async () => {
-      const response = await instanceAxios.get('/customers', {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`
-        }
-      })
+    if (!auth.token) navigate('/login', { replace: true })
 
-      setCustomers(response.data)
+    const getDataAPI = async () => {
+      try {
+        const response = await instanceAxios.get('/customers', {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        })
+
+        setCustomers(response.data)
+      } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem('token')
+          setAuth({
+            token: null,
+            auth: false
+          })
+        }
+      }
     }
     getDataAPI()
   }, [])
