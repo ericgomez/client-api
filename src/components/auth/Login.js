@@ -1,10 +1,16 @@
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 
 import instanceAxios from './../../config/axios'
 
+// import context
+import { CRMContext } from './../../context/CRMContext'
+
 export const Login = () => {
+  // context
+  const [auth, setAuth] = useContext(CRMContext)
+
   const navigate = useNavigate()
   const [credentials, setCredentials] = useState({
     email: '',
@@ -22,9 +28,16 @@ export const Login = () => {
 
     try {
       const response = await instanceAxios.post('/auth/login', credentials)
+      const { token } = response.data
 
       // save token in local storage
-      localStorage.setItem('token', response.data.token)
+      localStorage.setItem('token', token)
+
+      // save token in set auth Context
+      setAuth({
+        token,
+        auth: true
+      })
 
       Swal.fire('Login successful', 'Welcome', 'success')
 
