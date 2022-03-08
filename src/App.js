@@ -1,20 +1,18 @@
+import { useContext } from 'react'
+
 import { Header } from './components/layout/Header'
-import { Navigation } from './components/layout/Navigation'
 
 import { AppRouter } from './routers/AppRouter'
+import { CRMContext, CRMProvider } from './context/CRMContext'
 
 function App () {
-  return (
-    <>
-      <Header />
-      <div className='grid container content-principal'>
-        <Navigation />
+  const [auth, setAuth] = useContext(CRMContext)
 
-        <main className='box-content col-9'>
-          <AppRouter />
-        </main>
-      </div>
-    </>
+  return (
+    <CRMProvider value={[auth, setAuth]}>
+      <Header />
+      <AppRouter />
+    </CRMProvider>
   )
 }
 

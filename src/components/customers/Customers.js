@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { Customer } from './Customer'
 
+// import context
+import { CRMContext } from './../../context/CRMContext'
+
 export const Customers = () => {
   const [customers, setCustomers] = useState([])
+
+  // context
+  const [auth, setAuth] = useContext(CRMContext)
+
+  console.log('auth', auth)
 
   useEffect(() => {
     const getDataAPI = async () => {

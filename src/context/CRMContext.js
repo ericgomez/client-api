@@ -15,4 +15,4 @@ const CRMProvider = props => {
   )
 }
 
-module.exports = { CRMContext, CRMProvider }
+export { CRMContext, CRMProvider }
