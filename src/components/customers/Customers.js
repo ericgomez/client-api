@@ -9,7 +9,11 @@ export const Customers = () => {
 
   useEffect(() => {
     const getDataAPI = async () => {
-      const response = await instanceAxios.get('/customers')
+      const response = await instanceAxios.get('/customers', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+      })
 
       setCustomers(response.data)
     }
