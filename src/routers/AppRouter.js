@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 
+import { Header } from './../components/layout/Header'
 import { Navigation } from './../components/layout/Navigation'
 
 import { Customers } from './../components/customers/Customers'
@@ -15,6 +16,7 @@ import { Login } from './../components/auth/Login'
 export const AppRouter = () => {
   return (
     <Router>
+      <Header />
       <div className='grid container content-principal'>
         <Navigation />
 

@@ -14,8 +14,6 @@ export const Customers = () => {
   // context
   const [auth, setAuth] = useContext(CRMContext)
 
-  console.log('auth', auth)
-
   useEffect(() => {
     if (!auth.token) navigate('/login', { replace: true })
 
