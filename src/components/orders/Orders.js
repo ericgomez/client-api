@@ -1,16 +1,40 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { OrderDetails } from './OrderDetails'
 
+// import context
+import { CRMContext } from './../../context/CRMContext'
+
 export const Orders = () => {
   const [orders, setOrders] = useState([])
+  const navigate = useNavigate()
+
+  // context
+  const [auth, setAuth] = useContext(CRMContext)
 
   useEffect(() => {
-    const getOrdersAPI = async () => {
-      const response = await instanceAxios.get('/orders')
+    if (!auth.token) navigate('/login', { replace: true })
 
-      setOrders(response.data)
+    const getOrdersAPI = async () => {
+      try {
+        const response = await instanceAxios.get('/orders', {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        })
+
+        setOrders(response.data)
+      } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem('token')
+          setAuth({
+            token: null,
+            auth: false
+          })
+        }
+      }
     }
 
     getOrdersAPI()

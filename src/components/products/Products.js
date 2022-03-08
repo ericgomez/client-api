@@ -1,19 +1,43 @@
-import { useState, useEffect, useCallback } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 import instanceAxios from './../../config/axios'
 import { Product } from './../../components/products/Product'
 import { Spinner } from './../../components/layout/Spinner'
 
+// import context
+import { CRMContext } from './../../context/CRMContext'
+
 export const Products = () => {
   const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(true)
+  const navigate = useNavigate()
+
+  // context
+  const [auth, setAuth] = useContext(CRMContext)
 
   useEffect(() => {
+    if (!auth.token) navigate('/login', { replace: true })
+
     const getProductsAPI = async () => {
-      const response = await instanceAxios.get('/products')
-      setProducts(response.data)
-      setLoading(false)
+      try {
+        const response = await instanceAxios.get('/products', {
+          headers: {
+            Authorization: `Bearer ${auth.token}`
+          }
+        })
+
+        setProducts(response.data)
+        setLoading(false)
+      } catch (error) {
+        if (error.response.status === 401) {
+          localStorage.removeItem('token')
+          setAuth({
+            token: null,
+            auth: false
+          })
+        }
+      }
     }
 
     getProductsAPI()
