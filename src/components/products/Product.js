@@ -32,7 +32,9 @@ export const Product = ({ product, handleRemoveProduct }) => {
       <div className='info-product'>
         <p className='name'>{name}</p>
         <p className='price'>${price} </p>
-        {image && <img src={`http://localhost:5000/${image}`} alt={image} />}
+        {image && (
+          <img src={`${process.env.APP_API_URL}/${image}`} alt={image} />
+        )}
       </div>
       <div className='actions'>
         <Link to={`/products/edit/${_id}`} className='btn btn-blue'>

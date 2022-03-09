@@ -25,12 +25,17 @@ export const Header = () => {
       <div className='container'>
         <div className='content-bar'>
           <h1>CRM - Client Administrator</h1>
+          {auth.auth && (
+            <button
+              type='button'
+              className='btn btn-red'
+              onClick={handleLogout}
+            >
+              <i className='far fa-times-circle'></i>
 
-          <button type='button' className='btn btn-red' onClick={handleLogout}>
-            <i className='far fa-times-circle'></i>
-
-            <span>Logout</span>
-          </button>
+              <span>Logout</span>
+            </button>
+          )}
         </div>
       </div>
     </header>

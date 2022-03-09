@@ -44,7 +44,11 @@ export const Login = () => {
       // navigate to customers
       navigate('/', { replace: true })
     } catch (error) {
-      Swal.fire('Error', 'The credentials are incorrect', 'error')
+      if (!error.response) {
+        Swal.fire('Login failed', 'Server not available', 'error')
+      }
+
+      Swal.fire('Login failed', error.response.data.message, 'error')
     }
   }
 

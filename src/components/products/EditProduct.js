@@ -105,7 +105,7 @@ export const EditProduct = () => {
           <label>Image:</label>
           {image && (
             <img
-              src={`http://localhost:5000/${image}`}
+              src={`${process.env.APP_API_URL}/${image}`}
               alt={image}
               width='300'
             />
